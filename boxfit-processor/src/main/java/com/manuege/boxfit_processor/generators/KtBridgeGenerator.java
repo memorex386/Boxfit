@@ -66,8 +66,8 @@ public class KtBridgeGenerator extends AbstractKtFileGenerator {
         String methodName = "set" + Utils.capitalize(fieldInfo.getName());
         FunSpec.Builder builder = new FunSpec.Builder(methodName)
                 .addParameter("obj", className)
-                .addParameter("value", fieldName)
-                .addStatement("obj.%L = value", fieldInfo.getName());
+                .addParameter("value", fieldName.asNullable())
+                .addStatement("if (value != null) obj.%L = value", fieldInfo.getName());
         return builder.build();
     }
 
